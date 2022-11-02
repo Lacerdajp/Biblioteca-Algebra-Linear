@@ -35,6 +35,21 @@ double buscaMaiorValorVetor(int tamanho,double vetor[tamanho]){
     }
     return maior;
 }
+void produtoMatrizVetor(int tamanho,int linha,int coluna,double matriz[linha][coluna],double vetor[tamanho],double produto[tamanho]){
+    for (int i = 0; i < tamanho; i++)
+    {
+        for (int j = 0; j < linha; j++)
+        {
+            for (int k = 0; k < coluna; k++)
+            {
+                produto[i]=vetor[i]+matriz[j][k];
+            }
+            
+        }
+        
+    }
+    
+}
 
 void duplicarMatriz(int linha,int coluna,double matriz[linha][coluna],double matrizDuplicada[linha][coluna]){
     for (int i = 0; i < linha; i++)
@@ -88,6 +103,41 @@ void adicionaVetorMatrizLinha(int linhasTotal,int colunasTotal,int linha, double
         matriz[linha][i]=vetor[i];
     }
     
+}
+void calcularTransposta(int linhas, int colunas,double matriz[linhas][colunas], double mT[linhas][colunas] )
+{
+
+    for (int i = 0; i < linhas; i++)
+    {
+        for (int j = 0; j < colunas; j++)
+        {
+            mT[j][i] = matriz[i][j];
+        }
+    }
+}
+int isSimetrica(int linha, int coluna,double matriz[linha][coluna])
+{
+    double mT[linha][coluna];
+    zerarMatriz(mT, linha, coluna);
+    if (linha != coluna)
+    {
+        return 1;
+    }
+    else
+    {
+        calcularTransposta(matriz, mT, linha, coluna);
+        for (int i = 0; i < linha; i++)
+        {
+            for (int j = 0; j < coluna; j++)
+            {
+                if (mT[i][j] != matriz[i][j])
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
 }
 double triangulacaoDeterminante(int tamanho, double matriz[tamanho][tamanho]){
     double ajusteSinal=1;
@@ -250,7 +300,18 @@ double matrizX[iteracao][tamanho];
     
     
 }
+void metodoGradiente(int tamanho,double matriz[tamanho][tamanho],double vetorB[tamanho],int iteracao,double valoresX[tamanho],double omega){
+    if (isSimetrica(tamanho,tamanho,matriz)!=0)
+    {
+        printf("Matriz nao Simetrica");
+    }
+    else{
+        double r[tamanho];
+        produtoMatrizVetor(tamanho,tamanho,tamanho,matriz,vetorB,r);
+        duplicarVetor(tamanho,r,valoresX);
 
+    }
+}
 
 
 int main(){
